@@ -2,11 +2,13 @@ package goirc
 
 import (
 	"errors"
+	"fmt"
 	"strings"
+	"time"
 )
 
 func (c *Bot) Join(name string) {
-	newchan := &Channel{Name: name}
+	newchan := &Channel{Name: name, Flood: 0}
 	c.Channels = append(c.Channels, newchan)
 }
 
@@ -44,4 +46,15 @@ func (c *Bot) GetChanList() string {
 		list = append(list, IRCChan.Name)
 	}
 	return strings.Join(list, ",")
+}
+
+func (c *Channel) FloodControl() int {
+	c.Flood += 1
+	go c.DecreaseFlood()
+	return c.Flood
+}
+
+func (c *Channel) DecreaseFlood() {
+	time.Sleep((time.Millisecond * 500) + (time.Second * time.Duration(c.Flood)))
+	c.Flood = c.Flood - 1
 }

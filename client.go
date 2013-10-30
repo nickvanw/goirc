@@ -25,6 +25,7 @@ type Bot struct {
 type Channel struct {
 	Name  string
 	Users []*User
+	Flood int
 }
 
 type User struct {
