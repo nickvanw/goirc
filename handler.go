@@ -8,6 +8,7 @@ import (
 type Message struct {
 	Nick, Chan string
 	Message    []string
+	ChanObj    *Channel
 	Type       int
 	out        chan string
 }
@@ -24,9 +25,11 @@ func (c *Bot) events() { //Where all the reading magic happens
 			case "PRIVMSG":
 				//Handle Private Messages
 				//Fix the to/from issue either here or in the output message
+				ch, _ := c.GetChan(msg.Args[0])
 				out := &Message{
 					Nick:    msg.Nick,
 					Chan:    msg.Args[0],
+					ChanObj: ch,
 					Message: strings.Split(msg.Args[1], " "),
 					out:     c.Write,
 				}
