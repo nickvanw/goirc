@@ -51,6 +51,7 @@ func (c *Bot) events() { //Where all the reading magic happens
 					Nick:    msg.Nick,
 					Message: strings.Split(msg.Args[1], " "),
 					Chan:    "",
+					ChanObj: &Channel{},
 					Type:    2,
 					out:     c.Write,
 				}
