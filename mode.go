@@ -11,7 +11,6 @@ func (c *Bot) ParseMode(modes []string) {
 	modeArgs := modes[2:]
 	var op bool
 	for i := 0; i < len(modeString); i++ {
-		fmt.Println(i, modeArgs, modeString[i], op)
 		switch m := modeString[i]; m {
 		case '+':
 			op = true
