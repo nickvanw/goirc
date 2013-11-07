@@ -19,7 +19,6 @@ func (c *Bot) events() { //Where all the reading magic happens
 	for {
 		select {
 		case msg := <-c.raw:
-			fmt.Println(msg)
 			//Now we have the message event, it's time we handle it?
 			switch msg.Cmd {
 			case "PRIVMSG":
