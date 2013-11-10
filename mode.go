@@ -1,9 +1,5 @@
 package goirc
 
-import (
-	"fmt"
-)
-
 // Currently completely ignores channel modes. Probably for the best.
 func (c *Bot) ParseMode(modes []string) {
 	channel, _ := c.GetChan(string(modes[0]))
