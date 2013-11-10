@@ -91,6 +91,9 @@ func (c *Bot) events() { //Where all the reading magic happens
 }
 
 func (msg *Message) Return(out string) {
+	if len(out) > 450 {
+		out = out[:450]
+	}
 	switch msg.Type {
 	case 0:
 		msg.out <- fmt.Sprintf("PRIVMSG %s :%s", msg.Chan, out)
