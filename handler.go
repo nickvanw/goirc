@@ -72,6 +72,12 @@ func (c *Bot) events() { //Where all the reading magic happens
 				} else {
 					c.PartUser(msg.Args[0], msg.Nick)
 				}
+			case "KICK":
+				if msg.Nick == c.Name {
+					c.Part(msg.Args[0])
+				} else {
+					c.PartUser(msg.Args[0], msg.Nick)
+				}
 			case "QUIT":
 				c.QuitUser(msg.Nick)
 			case "353":
@@ -90,19 +96,31 @@ func (c *Bot) events() { //Where all the reading magic happens
 	}
 }
 
-func (msg *Message) Return(out string) {
-	if len(out) > 450 {
-		out = out[:450]
+func split(s string, N int) []string {
+	var r []string
+	if len(s) <= N {
+		return append(r, s)
 	}
-	switch msg.Type {
-	case 0:
-		msg.out <- fmt.Sprintf("PRIVMSG %s :%s", msg.Chan, out)
-	case 1:
-		msg.out <- fmt.Sprintf("PRIVMSG %s :%s", msg.Nick, out)
-	case 2:
-		msg.out <- fmt.Sprintf("NOTICE %s :%s", msg.Nick, out)
-	default:
-		fmt.Println("Not Implemented!")
+	for len(s) > N {
+		r, s = append(r, s[:N]), s[N:]
+	}
+	return append(r, s)
+}
+
+func (msg *Message) Return(out string) {
+	d := split(out, 400)
+	for i := 0; i < len(d) && i <= 1; i++ {
+		out := d[i]
+		switch msg.Type {
+		case 0:
+			msg.out <- fmt.Sprintf("PRIVMSG %s :%s", msg.Chan, out)
+		case 1:
+			msg.out <- fmt.Sprintf("PRIVMSG %s :%s", msg.Nick, out)
+		case 2:
+			msg.out <- fmt.Sprintf("NOTICE %s :%s", msg.Nick, out)
+		default:
+			fmt.Println("Not Implemented!")
+		}
 	}
 }
 
