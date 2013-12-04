@@ -11,15 +11,16 @@ import (
 const discon string = "DC\r\n"
 
 type Bot struct {
-	con      *Conn
-	raw      chan *Line
-	Write    chan string
-	err      chan error
-	Message  chan *Message
-	Name     string
-	Server   string
-	port     int
-	Channels []*Channel
+	con          *Conn
+	raw          chan *Line
+	Write        chan string
+	err          chan error
+	Message      chan *Message
+	Name         string
+	Server       string
+	port         int
+	RejoinOnKick bool
+	Channels     []*Channel
 }
 
 type Channel struct {
@@ -37,13 +38,14 @@ type User struct {
 
 func Create(name string, server string, port int) (*Bot, error) {
 	bot := &Bot{
-		Name:    name,
-		Server:  server,
-		port:    port,
-		err:     make(chan error),
-		raw:     make(chan *Line),
-		Message: make(chan *Message),
-		Write:   make(chan string),
+		Name:         name,
+		Server:       server,
+		port:         port,
+		err:          make(chan error),
+		raw:          make(chan *Line),
+		Message:      make(chan *Message),
+		Write:        make(chan string),
+		RejoinOnKick: true,
 	}
 	_, err := bot.connect()
 	if err != nil {

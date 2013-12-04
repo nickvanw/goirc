@@ -2,6 +2,7 @@ package goirc
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 )
@@ -16,6 +17,9 @@ func (c *Bot) Part(name string) {
 		if strings.ToLower(pchan.Name) == strings.ToLower(name) {
 			c.Channels = append(c.Channels[:num], c.Channels[num+1:]...)
 		}
+	}
+	if c.RejoinOnKick {
+		c.con.PrintLine("JOIN %s\r\n", name)
 	}
 }
 
