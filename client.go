@@ -21,6 +21,7 @@ type Bot struct {
 	port         int
 	RejoinOnKick bool
 	Channels     []*Channel
+	AdminAddr    string
 }
 
 type Channel struct {
@@ -46,6 +47,7 @@ func Create(name string, server string, port int) (*Bot, error) {
 		Message:      make(chan *Message),
 		Write:        make(chan string),
 		RejoinOnKick: true,
+		AdminAddr:    "manacit!~manacit@XVXVqUzRsSStYx",
 	}
 	_, err := bot.connect()
 	if err != nil {

@@ -69,6 +69,13 @@ func (c *Bot) GetUser(channel string, user string) (*User, error) {
 	return &User{}, errors.New("Not a user!")
 }
 
+func (c *Bot) RenameUser(oldname string, newname string) {
+	for _, channel := range c.Channels {
+		olduser := channel.GetUser(oldname)
+		olduser.Name = newname
+	}
+}
+
 func (c *Channel) GetUser(name string) *User {
 	for _, user := range c.Users {
 		if strings.ToLower(user.Name) == strings.ToLower(name) {
