@@ -47,7 +47,7 @@ func Create(name string, server string, port int) (*Bot, error) {
 		Message:      make(chan *Message),
 		Write:        make(chan string),
 		RejoinOnKick: true,
-		AdminAddr:    "manacit!~manacit@XVXVqUzRsSStYx",
+		AdminAddr:    "manacit!~manacit@unaffiliated/manacit",
 	}
 	_, err := bot.connect()
 	if err != nil {
