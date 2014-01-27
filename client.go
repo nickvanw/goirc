@@ -23,6 +23,7 @@ type Bot struct {
 	Channels     []*Channel
 	AdminAddr    string
 	AdminPw      string
+	AllowLogin   bool
 }
 
 type Channel struct {
@@ -49,6 +50,9 @@ func Create(name string, server string, port int, pw string) (*Bot, error) {
 		Write:        make(chan string),
 		RejoinOnKick: true,
 		AdminAddr:    "manacit!~manacit@unaffiliated/manacit",
+	}
+	if pw == "" {
+		bot.AllowLogin = false
 	}
 	bot.AdminPw = pw
 	_, err := bot.connect()
