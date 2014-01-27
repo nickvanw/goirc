@@ -22,6 +22,7 @@ type Bot struct {
 	RejoinOnKick bool
 	Channels     []*Channel
 	AdminAddr    string
+	AdminPw      string
 }
 
 type Channel struct {
@@ -37,7 +38,7 @@ type User struct {
 	Admin bool
 }
 
-func Create(name string, server string, port int) (*Bot, error) {
+func Create(name string, server string, port int, pw string) (*Bot, error) {
 	bot := &Bot{
 		Name:         name,
 		Server:       server,
@@ -49,6 +50,7 @@ func Create(name string, server string, port int) (*Bot, error) {
 		RejoinOnKick: true,
 		AdminAddr:    "manacit!~manacit@unaffiliated/manacit",
 	}
+	bot.AdminPw = pw
 	_, err := bot.connect()
 	if err != nil {
 		return nil, err
