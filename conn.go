@@ -30,6 +30,7 @@ func Connect(addr string, port int) (*Conn, error) {
 			return con, nil
 		}
 	}
+	return nil, errors.New("Exceeded Retry Count!")
 }
 
 func (c *Conn) ReadLine() (string, error) {
