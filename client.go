@@ -53,7 +53,6 @@ func Create(name string, server string, port int, pw string) (*Bot, error) {
 	}
 	bot.AllowLogin = true
 	if pw == "" {
-		fmt.Println("Disable passwords")
 		bot.AllowLogin = false
 	}
 	bot.AdminPw = pw
